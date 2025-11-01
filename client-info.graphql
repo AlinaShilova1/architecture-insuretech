@@ -1,0 +1,49 @@
+# client-info GraphQL Schema (SDL)
+# Covers existing REST endpoints:
+# - GET /clients/{id}
+# - GET /clients/{id}/documents
+# - GET /clients/{id}/relatives
+
+schema {
+  query: Query
+}
+
+
+"""Root query type"""
+type Query {
+  """Get a client by ID (equivalent to GET /clients/{id})"""
+  client(id: ID!): Client
+
+  """Optional: list clients for admin screens"""
+  clients(limit: Int = 20, offset: Int = 0): [Client!]!
+}
+
+"""Client entity"""
+type Client {
+  id: ID!
+  name: String
+  age: Int
+
+  """Client's documents (equivalent to GET /clients/{id}/documents)"""
+  documents: [Document!]!
+
+  """Client's relatives (equivalent to GET /clients/{id}/relatives)"""
+  relatives: [Relative!]!
+}
+
+"""Document entity"""
+type Document {
+  id: ID!
+  type: String
+  number: String
+  issueDate: String
+  expiryDate: String
+}
+
+"""Relative entity"""
+type Relative {
+  id: ID!
+  relationType: String
+  name: String
+  age: Int
+}
